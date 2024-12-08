@@ -1,5 +1,5 @@
 ﻿// Step 1: Create a folder to store downloaded audio files
-string folderPath = Path.Combine(AppContext.BaseDirectory, "QuranAudio");
+string folderPath = Path.Combine(Directory.GetParent(AppContext.BaseDirectory).Parent.Parent.Parent.FullName, "QuranAudio");
 Directory.CreateDirectory(folderPath);
 
 // Step 2: Define the base URL for the audio files
