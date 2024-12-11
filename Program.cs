@@ -7,6 +7,7 @@ string baseUrl = "https://server11.mp3quran.net/yasser/";
 
 // Step 3: Initialize HttpClient
 using HttpClient client = new HttpClient();
+client.Timeout = TimeSpan.FromMinutes(8);
 
 // Step 4: Loop through Surah numbers (001 to 114)
 for (int i = 1; i <= 114; i++)
