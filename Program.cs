@@ -43,22 +43,36 @@ public class QuranAudioDownloader
 
         try
         {
+            // Set the default color to white
+            Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine($"Downloading Surah {surahNumber:D3}...");
+
             bool success = await DownloadFileAsync(fileUrl, savePath);
             if (success)
             {
+                // Success message in green
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine($"Downloaded: {fileName}");
             }
             else
             {
+                // Failure message in red
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"Failed to download Surah {surahNumber:D3}");
             }
             return success;
         }
         catch (Exception ex)
         {
+            // Error message in red
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine($"Error downloading Surah {surahNumber:D3}: {ex.Message}");
             return false;
+        }
+        finally
+        {
+            // Reset the color to white after the message
+            Console.ResetColor();
         }
     }
 
@@ -89,10 +103,13 @@ public class QuranAudioDownloader
         {
             try
             {
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine($"Retrying Surah {surahNumber:D3}, Attempt {retries + 1}/{maxRetries}...");
+
                 bool success = await DownloadFileAsync(fileUrl, savePath);
                 if (success)
                 {
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine($"Successfully downloaded Surah {surahNumber:D3} on attempt {retries + 1}.");
                     return true;
                 }
@@ -100,11 +117,17 @@ public class QuranAudioDownloader
             catch (Exception ex)
             {
                 retries++;
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"Error downloading Surah {surahNumber:D3}: {ex.Message}");
                 if (retries == maxRetries)
                 {
                     Console.WriteLine($"Failed to download Surah {surahNumber:D3} after {maxRetries} attempts.");
                 }
+            }
+            finally
+            {
+                // Reset color to white after each attempt
+                Console.ResetColor();
             }
         }
         return false;
@@ -131,11 +154,16 @@ public class QuranAudioDownloader
     {
         if (notDownloaded.Count == 0)
         {
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("All downloads completed!");
         }
         else
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine($"Failed to download Surahs: {string.Join(", ", notDownloaded)}");
         }
+
+        // Reset color to white after final report
+        Console.ResetColor();
     }
 }
